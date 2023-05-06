@@ -9,7 +9,13 @@ import com.abrsoftware.plugins.*
 import org.h2.engine.Database
 
 fun main() {
-    embeddedServer(Netty, port = 8080, host = "192.168.100.5", module = Application::module)
+    //System.setProperty("io.ktor.development", "true")
+    embeddedServer(
+        Netty,
+        port = 8080,
+        host = "192.168.100.5",
+        module = Application::module,
+    )
         .start(wait = true)
 }
 

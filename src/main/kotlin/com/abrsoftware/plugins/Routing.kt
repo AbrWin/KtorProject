@@ -10,6 +10,8 @@ import io.ktor.server.application.*
 fun Application.configureRouting() {
     routing {
         get("/") {
+            val debug = call.application.environment.developmentMode
+            println("Hi there-> $debug")
             call.respondText("Hello World!")
         }
 
