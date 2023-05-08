@@ -12,7 +12,7 @@ fun main() {
     //System.setProperty("io.ktor.development", "true")
     embeddedServer(
         Netty,
-        port = 443,
+        port = 80,
         host = "social-app-paladdar.azurewebsites.net",
         module = Application::module,
     )
