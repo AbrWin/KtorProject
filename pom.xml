@@ -17,7 +17,7 @@
                         <archive>
                             <manifest>
                                 <mainClass>
-                                    com.abrsoftware.ApplicationKt
+                                    com.abrsoftware.ApplicationKt.main
                                 </mainClass>
                             </manifest>
                         </archive>
