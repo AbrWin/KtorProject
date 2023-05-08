@@ -1,9 +1,6 @@
 package com.abrsoftware.route
 
-import com.abrsoftware.model.AuthResponse
-import com.abrsoftware.model.RecipeParams
-import com.abrsoftware.model.SignInParams
-import com.abrsoftware.model.SignUpParams
+import com.abrsoftware.model.*
 import com.abrsoftware.repository.recipe.RecipeRepository
 import com.abrsoftware.repository.user.UserRepository
 import io.ktor.http.*
@@ -23,7 +20,7 @@ fun Routing.authRouting(){
             if(params == null){
                 call.respond(
                     status = HttpStatusCode.BadRequest,
-                    message = AuthResponse(
+                    message = ErrorResponse(
                         errorMessage = "Invalid credentials"
                     )
                 )
@@ -45,7 +42,7 @@ fun Routing.authRouting(){
             if(params == null){
                 call.respond(
                     status = HttpStatusCode.BadRequest,
-                    message = AuthResponse(
+                    message = ErrorResponse(
                         errorMessage = "Invalid credentials"
                     )
                 )

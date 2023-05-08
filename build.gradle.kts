@@ -8,6 +8,15 @@ val exposed_version : String by project
 val koin_version : String by project
 val hikaricp_version : String by project
 
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "com.abrsoftware.ApplicationKt"
+    }
+    configurations["compileClasspath"].forEach { file: File ->
+        from(zipTree(file.absoluteFile))
+    }
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
 plugins {
     kotlin("jvm") version "1.8.20"
     id("io.ktor.plugin") version "2.2.4"
@@ -44,5 +53,7 @@ dependencies {
 
     implementation("com.zaxxer:HikariCP:$hikaricp_version")
     implementation("io.insert-koin:koin-ktor:$koin_version")
+    implementation("io.ktor:ktor-jackson:1.5.4")
+
 
 }

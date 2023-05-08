@@ -22,6 +22,13 @@ data class AuthResponse(
 )
 
 @Serializable
+data class ErrorResponse(
+    val data: AuthResponseData? = null,
+    val errorMessage: String? = null
+)
+
+
+@Serializable
 data class AuthResponseData(
     val id: Int,
     val name: String,

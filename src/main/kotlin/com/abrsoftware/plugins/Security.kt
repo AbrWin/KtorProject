@@ -1,6 +1,6 @@
 package com.abrsoftware.plugins
 
-import com.abrsoftware.model.AuthResponse
+import com.abrsoftware.model.ErrorResponse
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import com.auth0.jwt.JWT
@@ -37,7 +37,7 @@ fun Application.configureSecurity() {
             challenge { _, _ ->
                 call.respond(
                     status = HttpStatusCode.Unauthorized,
-                    message = AuthResponse(
+                    message = ErrorResponse(
                         errorMessage = "Token is not valid or has expired"
                     )
                 )

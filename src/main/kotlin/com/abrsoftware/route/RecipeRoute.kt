@@ -1,6 +1,6 @@
 package com.abrsoftware.route
 
-import com.abrsoftware.model.AuthResponse
+import com.abrsoftware.model.ErrorResponse
 import com.abrsoftware.model.ListRecipeParams
 import com.abrsoftware.model.RecipeParams
 import com.abrsoftware.repository.recipe.RecipeRepository
@@ -20,7 +20,7 @@ fun Routing.recipeRouting(){
             if(params == null){
                 call.respond(
                     status = HttpStatusCode.BadRequest,
-                    message = AuthResponse(
+                    message = ErrorResponse(
                         errorMessage = "Invalid information"
                     )
                 )
@@ -41,7 +41,7 @@ fun Routing.recipeRouting(){
             if(params == null){
                 call.respond(
                     status = HttpStatusCode.BadRequest,
-                    message = AuthResponse(
+                    message = ErrorResponse(
                         errorMessage = "Invalid information"
                     )
                 )

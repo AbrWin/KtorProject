@@ -19,7 +19,7 @@ class UserRepositoryImpl(
             Response.Error(
                 code = HttpStatusCode.Conflict,
                 data = AuthResponse(
-                    errorMessage = "A user this email al ready exists!"
+                    errorMessage = "A user with this email already exists!"
                 )
             )
         } else {

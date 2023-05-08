@@ -12,7 +12,8 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 private val usernameDb = System.getenv("db.username")
 private val passwordDb = System.getenv("db.password")
-
+private val ipDb = System.getenv("db.ip")
+private val nameDb = System.getenv("db.name")
 object DatabaseFactory {
     fun init() {
         Database.connect(createHikariDataSource())
@@ -23,15 +24,13 @@ object DatabaseFactory {
 
     private fun createHikariDataSource(): HikariDataSource {
         val driverClass = "org.postgresql.Driver"
-        val jdbcUrl = "jdbc:postgresql://localhost:5432/socialdb"
+        val jdbcUrl = "jdbc:postgresql://${ipDb}/${nameDb}?user=${usernameDb}&password=${passwordDb}"
 
         val hikariConfig = HikariConfig().apply {
             driverClassName = driverClass
             setJdbcUrl(jdbcUrl)
             maximumPoolSize = 3
             isAutoCommit = false
-            username = usernameDb
-            password = "hola#2143#"
             transactionIsolation = "TRANSACTION_REPEATABLE_READ"
             validate()
         }

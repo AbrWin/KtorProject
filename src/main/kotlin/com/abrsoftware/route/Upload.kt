@@ -1,7 +1,7 @@
 package com.abrsoftware.route
 
 
-import com.abrsoftware.model.AuthResponse
+import com.abrsoftware.model.ErrorResponse
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.application.*
@@ -9,7 +9,6 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import java.io.File
-import java.io.InputStream
 
 fun Routing.uploadRouting() {
     var fileDescription = ""
@@ -32,8 +31,8 @@ fun Routing.uploadRouting() {
                     }catch (e: Exception){
                         call.respond(
                             status = HttpStatusCode.InternalServerError,
-                            message = AuthResponse(
-                                errorMessage = "Sorry, we have a problem right now!"
+                            message = ErrorResponse(
+                                errorMessage = "Sorry, we couldn't save your photo right now!"
                             )
                         )
                     }
@@ -42,8 +41,8 @@ fun Routing.uploadRouting() {
                 else -> {
                     call.respond(
                         status = HttpStatusCode.BadRequest,
-                        message = AuthResponse(
-                            errorMessage = "Invalid information"
+                        message = ErrorResponse(
+                            errorMessage = "Sorry, we have a problem right now!"
                         )
                     )
                 }
