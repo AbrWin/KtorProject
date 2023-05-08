@@ -12,8 +12,8 @@ fun main() {
     //System.setProperty("io.ktor.development", "true")
     embeddedServer(
         Netty,
-        port = 8080,
-        host = "192.168.100.5",
+        port = 80,
+        host = "0.0.0.0",
         module = Application::module,
     )
         .start(wait = true)
