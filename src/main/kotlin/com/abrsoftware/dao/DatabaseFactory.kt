@@ -10,10 +10,10 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 
-private val usernameDb = System.getenv("db.username")
-private val passwordDb = System.getenv("db.password")
-private val ipDb = System.getenv("db.ip")
-private val nameDb = System.getenv("db.name")
+private val usernameDb = System.getenv("DB_USERNAME")
+private val passwordDb = System.getenv("DB_PASSWORD")
+private val ipDb = System.getenv("DB_IP")
+private val nameDb = System.getenv("DB_NAME")
 object DatabaseFactory {
     fun init() {
         Database.connect(createHikariDataSource())
