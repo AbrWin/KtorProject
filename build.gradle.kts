@@ -1,3 +1,6 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import com.google.cloud.tools.gradle.appengine.appyaml.AppEngineAppYamlExtension
+
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
@@ -7,24 +10,19 @@ val exposed_version : String by project
 
 val koin_version : String by project
 val hikaricp_version : String by project
+val versionApp: String by project
+val jarFileName: String = "ktor-server-$versionApp-with-dependencies.jar"
 
-tasks.jar {
-    manifest {
-        attributes["Main-Class"] = "com.abrsoftware.ApplicationKt"
-    }
-    configurations["compileClasspath"].forEach { file: File ->
-        from(zipTree(file.absoluteFile))
-    }
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
-}
 plugins {
     kotlin("jvm") version "1.8.20"
     id("io.ktor.plugin") version "2.2.4"
-                id("org.jetbrains.kotlin.plugin.serialization") version "1.8.20"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.20"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.google.cloud.tools.appengine") version "2.4.2"
 }
 
 group = "com.abrsoftware"
-version = "0.0.1"
+version = versionApp
 application {
     mainClass.set("com.abrsoftware.ApplicationKt")
 
@@ -34,6 +32,36 @@ application {
 
 repositories {
     mavenCentral()
+}
+
+tasks {
+    val shadowJarTask = named<ShadowJar>("shadowJar") {
+        archiveFileName.set(jarFileName)
+        mergeServiceFiles()
+        manifest {
+            attributes(mapOf("Main-Class" to application.mainClass))
+        }
+    }
+
+    named("jar") {
+        enabled = false
+    }
+    named("assemble") {
+        dependsOn(shadowJarTask)
+    }
+}
+
+configure<AppEngineAppYamlExtension> {
+    stage {
+        setAppEngineDirectory("src/main/appengine")
+        setArtifact("build/libs/$jarFileName")
+    }
+    deploy {
+        version = "GCLOUD_CONFIG"
+        projectId = versionApp
+        stopPreviousVersion = true
+        promote = true
+    }
 }
 
 dependencies {
@@ -54,6 +82,4 @@ dependencies {
     implementation("com.zaxxer:HikariCP:$hikaricp_version")
     implementation("io.insert-koin:koin-ktor:$koin_version")
     implementation("io.ktor:ktor-jackson:1.5.4")
-
-
 }

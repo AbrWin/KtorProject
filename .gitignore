@@ -24,7 +24,7 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-
+.gitignore
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
